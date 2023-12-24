@@ -1,0 +1,124 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: url('./background.jpg') center/cover no-repeat; /* Replace 'your-image-url.jpg' with the actual path to your image */
+    position: relative;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1; /* Ensure the h1 tag is above other elements */
+}
+.angle{
+    top: 30px;
+}
+
+#lockerBase {
+    width: 100%;
+    max-width: 400px;
+    /* height: 100%; */
+    aspect-ratio: 1 / 1; /* Maintain a 1:1 aspect ratio for the circle */
+    background-color: #3498db;
+    border-radius: 50%;
+    position: absolute;
+
+}
+
+.rotatingBorder {
+    width: 80%;
+    max-width: 400px;
+    aspect-ratio: 1 / 1;
+    background-color: transparent; /* Set to transparent to make it invisible */
+    border: 5px solid #ffcc00; /* Set border color and thickness */
+    border-radius: 50%;
+    position: absolute;
+    overflow: hidden; /* Ensure spikes don't overflow */
+    animation: rotate 3s infinite linear;
+}
+
+.rotatingDiv {
+    width: 50px;
+    height: 50px;
+    background-color: #ffcc00; /* You can set the background color you prefer */
+    position: absolute;
+    top: 50%; /* Adjust as needed */
+    left: 50%; /* Adjust as needed */
+    transform: translate(-50%, -50%);
+    animation: rotate 3s infinite linear;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Add spikes or any other styles for the rotating border here */
+.rotatingBorder::before{        /*,.rotatingBorder::after */
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 30px;
+    background-color: #ffcc00; /* Spike color */
+}
+
+
+.rotatingBorder::before {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%); 
+    /* rotate(45deg); */
+}
+
+/* .rotatingBorder::after {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(-45deg);
+} */
+
+.angleRange.range1 {
+    top: 5%;
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.angleRange.range2 {
+    bottom: 5%;
+    transform: translateX(-50%) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+    #lockerBase {
+        width: 90%;
+    }
+    .rotatingBorder{
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    #lockerBase {
+        width: 95%;
+    }
+    .rotatingBorder {
+        width: 95%;
+    }
+}

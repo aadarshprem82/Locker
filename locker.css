@@ -1,0 +1,21 @@
+body {
+    background: url("./background.jpg") no-repeat center center fixed;
+    background-size: cover;
+    font-family: Roboto;
+    color: white;
+    display:flex;
+    /* text-align: center; */
+    align-items: center;
+    justify-content: center;
+}
+
+#lockerBase{
+    width: 400px;
+    height: 400px;
+    background-color: rgb(138, 226, 255);
+    border: 5px solid rgb(11, 39, 66);
+    border-radius: 50%;
+    /* margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap; */
+}

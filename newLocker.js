@@ -6,7 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Function to check if the spike is within the specified angle range
     function checkWin(angle, targetRange) {
-        return angle+30 >= targetRange[0] && angle-30 <= targetRange[1];
+        return angle >= targetRange[0] && angle <= targetRange[1];
+    }
+
+    // Function to calculate the next angle in the sequence
+    function getNextAngle(currentAngle) {
+        return Math.ceil(currentAngle / 15) * 15;
     }
 
     // Get the rotating border element
@@ -36,13 +41,15 @@ document.addEventListener("DOMContentLoaded", function () {
         // Extract the rotation angle from the transform value
         var matrix = new DOMMatrix(transformValue);
         currentAngle = Math.round((Math.atan2(matrix.b, matrix.a) * (180 / Math.PI) + 360) % 360);
-        console.log("currentAngle: ",currentAngle);
+
+        // Calculate the next angle in the sequence
+        var nextAngle = getNextAngle(currentAngle);
 
         // Check if the spike is within the target angle range
         if (checkWin(currentAngle, targetRange)) {
             angleDisplay.textContent = 'You won!';
         } else {
-            angleDisplay.textContent = 'Try again! Target Angle Range: ' + targetRange[0] + ' to ' + targetRange[1];
+            angleDisplay.textContent = 'Try again! Next Target Angle Range: ' + nextAngle + ' to ' + (nextAngle + 15);
         }
     }
 
