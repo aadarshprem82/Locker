@@ -1,7 +1,68 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    var score = 0;
+    var timeLeft = 30;
+    var gameOver = false;
+
+    // Display the initial time left
+    document.querySelector('.time').textContent = timeLeft;
+
+    // Function to update the timer every second
+    function updateTimer() {
+        timeLeft--;
+
+        // Display the updated time left
+        document.querySelector('.time').textContent = timeLeft;
+
+        // Check if time is up
+        if (timeLeft <= 0) {
+            endGame();
+        } else {
+            // Continue updating the timer every second
+            setTimeout(updateTimer, 1000);
+        }
+    }
+
+    // Start the timer
+    setTimeout(updateTimer, 1000);
+
+    // Function to handle the end of the game
+    function endGame() {
+        gameOver = true;
+        // Stop the rotation animation
+        rotatingBorder.style.animationPlayState = 'paused';
+
+        // Display the final score
+        document.querySelector('.angle').textContent = 'Game Over! Final Score: ' + score;
+    }
+
+    // Function to restart the game after 2 seconds
+    function restartGame() {
+        if(!gameOver){
+            // Resume the rotation animation
+            rotatingBorder.style.animationPlayState = 'running';
+
+            // Generate a new random angle range
+            targetRange = getRandomAngles();
+
+            // Display the new random angle range
+            angleDisplay.textContent = 'Target Angle Range: ' + targetRange[0] + ' to ' + targetRange[1];
+
+            // Reset the message
+            angleDisplay.textContent = 'Try again! Target Angle Range: ' + targetRange[0] + ' to ' + targetRange[1];
+        }
+    }
+
     // Function to generate a random angle between 0 and 360 degrees
-    function getRandomAngle() {
-        return Math.round(Math.random() * 360);
+    function getRandomAngles() {
+        // Generate the first random angle
+        var angle1 = Math.round(Math.random() * 270); // Maximum 270 to ensure a gap of at least 90
+
+        // Generate the second random angle with a minimum gap of 90
+        var angle2 = (angle1 + 90 + Math.round(Math.random() * (360 - angle1 - 90))) % 360;
+
+        // Return the random angle pair
+        return [angle1, angle2];
     }
 
     // Function to check if the spike is within the specified angle range
@@ -19,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var currentAngle = 0;
 
     // Generate a random angle range at the beginning
-    var targetRange = [getRandomAngle(), getRandomAngle()];
+    var targetRange = getRandomAngles();
 
     // Display the initial random angle range
     angleDisplay.textContent = 'Target Angle Range: ' + targetRange[0] + ' to ' + targetRange[1];
@@ -40,9 +101,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Check if the spike is within the target angle range
         if (checkWin(currentAngle, targetRange)) {
+            score++;
+            // Display the score
+            document.querySelector('.score').textContent = score;
             angleDisplay.textContent = 'You won!';
+            setTimeout(restartGame, 2000);
         } else {
-            angleDisplay.textContent = 'Try again! Target Angle Range: ' + targetRange[0] + ' to ' + targetRange[1];
+            // angleDisplay.textContent = 'Try again! Target Angle Range: ' + targetRange[0] + ' to ' + targetRange[1];
+            setTimeout(restartGame, 2000);
         }
     }
 
